@@ -6,11 +6,14 @@ from pydantic import BaseModel, constr
 from datetime import datetime
 from typing import Annotated
 
+from .exception_handlers import exception_handler
+
 import logging
 
 logger = logging.getLogger(__name__)
 
 app = FastAPI()
+app.add_exception_handler(Exception, exception_handler)
 
 
 class JSONValidator(BaseModel):
@@ -44,7 +47,6 @@ def visited_links(json_data: JSONValidator):
 
 @app.get("/visited_domains")
 def visited_domains(_from: Annotated[int, Query(alias="from")], to: int):
-    logger.info(f"request / endpoint!")
     redis_key = 'links'
     r = redis.Redis()
 

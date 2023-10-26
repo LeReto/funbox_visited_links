@@ -1,26 +1,14 @@
-import re
 from datetime import datetime
 from typing import Annotated
 
 from dependency_injector.wiring import inject, Provide
 from fastapi import Query, Depends, APIRouter
-from pydantic import BaseModel, constr
 
 from .containers import Container
 from .services import Service
+from .models import LinksValidator
 
 router = APIRouter()
-
-
-class LinksValidator(BaseModel):
-    _regexp: str = r"(?:https?:\/\/)?([a-zA-Z0-9.-]+\.[a-z]+)"
-    links: list[constr(pattern=_regexp)]
-
-    def extract_domains(self):
-        return {
-            re.match(self._regexp, link).group(1)
-            for link in self.links
-        }
 
 
 @router.post("/visited_links")

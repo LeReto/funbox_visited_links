@@ -1,8 +1,8 @@
 from fastapi import FastAPI
 
-from . import endpoints
-from .containers import Container
-from .exception_handlers import exception_handler
+from funbox_visited_links import endpoints
+from funbox_visited_links.containers import Container
+from funbox_visited_links.exception_handlers import exception_handler
 
 
 def create_app() -> FastAPI:
@@ -20,3 +20,8 @@ def create_app() -> FastAPI:
 
 
 apps = create_app()
+
+
+if __name__ == "__main__":
+    import uvicorn
+    uvicorn.run(apps, host="0.0.0.0", port=8000)

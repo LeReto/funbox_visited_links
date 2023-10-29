@@ -6,7 +6,7 @@ class Service:
         self._redis = redis
         self._collection = collection
 
-    def set(self, domains: set, unix_timestamp: int):
+    def set(self, domains: set, unix_timestamp: int) -> None:
         self._redis.zadd(self._collection, {
             name: unix_timestamp
             for name in domains

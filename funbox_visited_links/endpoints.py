@@ -24,11 +24,11 @@ def visited_links(
     return {"status": "ok"}
 
 
-@router.get("/visited_domains")
+@router.get("/visited_domains/")
 @inject
 def visited_domains(
-        _from: Annotated[int, Query(alias="from")],
-        to: int,
+        _from: Annotated[int, Query(alias="from", ge=0)],
+        to: Annotated[int, Query(ge=0)],
         service: Service = Depends(Provide[Container.redis_service])
 ):
     domains = service.get(_from, to)
